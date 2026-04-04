@@ -8,6 +8,5 @@ export { toErrorMessage } from './error';
 export { default as Icon } from './Icon.svelte';
 export { renderMarkdown } from './markdown';
 export { hasScanner, isNativeBridge, scanQR } from './native-bridge';
-export { default as StatusBadge } from './StatusBadge.svelte';
 export { formatRelativeTime } from './time';
 export { getToolDescription } from './tool-title';

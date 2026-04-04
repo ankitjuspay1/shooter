@@ -372,7 +372,7 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: #4ade80;
+    background: var(--ds-green-500);
     margin-right: 2px;
     flex-shrink: 0;
   }

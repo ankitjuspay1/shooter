@@ -494,23 +494,6 @@
     padding-bottom: var(--space-6);
   }
 
-  .page-header {
-    margin-bottom: var(--space-8);
-  }
-
-  .page-title {
-    font-size: var(--text-2xl);
-    font-weight: 600;
-    letter-spacing: -0.03em;
-    color: var(--text-primary);
-    margin-bottom: var(--space-1);
-  }
-
-  .page-description {
-    font-size: var(--text-sm);
-    color: var(--text-secondary);
-  }
-
   .settings-grid {
     display: grid;
     grid-template-columns: 1fr 320px;

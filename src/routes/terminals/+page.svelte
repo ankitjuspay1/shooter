@@ -5,14 +5,13 @@
   import {
     clearCache,
     EmptyState,
-    formatRelativeTime,
     getCached,
     Icon,
     isShooterConfig,
     setCache,
   } from '$lib/modules/client/common';
   import LaunchSheet from '$lib/modules/client/terminal/LaunchSheet.svelte';
-  import { Banner, Button, Pill, Shimmer, Tooltip } from '@juspay/svelte-ui-components';
+  import { Banner, Button, Pill, RelativeTime, Shimmer, Tooltip } from '@juspay/svelte-ui-components';
   import { onDestroy, onMount } from 'svelte';
 
   const POLL_INTERVAL_MS = 10_000;
@@ -299,7 +298,7 @@
               <span class="terminal-command">{getCommandName(terminal.command)}</span>
               <Pill text={badge.label} classes={badge.class} />
             </div>
-            <span class="terminal-time">{formatRelativeTime(terminal.createdAt)}</span>
+            <RelativeTime date={terminal.createdAt} format="narrow" classes="terminal-time" />
           </div>
 
           <div class="terminal-card-meta">
@@ -336,11 +335,7 @@
               {/if}
             </div>
             <div class="terminal-card-right">
-              <span class="terminal-time">
-                {terminal.exitedAt
-                  ? formatRelativeTime(terminal.exitedAt)
-                  : formatRelativeTime(terminal.createdAt)}
-              </span>
+              <RelativeTime date={terminal.exitedAt || terminal.createdAt} format="narrow" classes="terminal-time" />
               <Button
                 classes="btn-ghost btn-sm btn-remove"
                 onclick={(e) => removeTerminal(e, terminal.id)}
@@ -368,7 +363,7 @@
 
 {#if config?.apiKey}
   <LaunchSheet
-    open={showLaunchSheet}
+    bind:open={showLaunchSheet}
     apiKey={config.apiKey}
     onClose={handleLaunchClose}
     onLaunch={handleLaunchComplete}
@@ -376,43 +371,12 @@
 {/if}
 
 <style>
-  .page-header {
-    margin-bottom: var(--space-6);
-  }
-
-  .page-header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: var(--space-4);
-  }
-
-  .page-title {
-    font-size: var(--text-2xl);
-    font-weight: 600;
-    letter-spacing: -0.03em;
-    color: var(--text-primary);
-    margin-bottom: var(--space-1);
-  }
-
-  .page-description {
-    font-size: var(--text-sm);
-    color: var(--text-secondary);
-  }
-
-  .page-actions {
-    display: flex;
-    gap: var(--space-2);
-    flex-shrink: 0;
-  }
-
   .plus-icon {
     font-size: 14px;
     font-weight: 600;
     line-height: 1;
   }
 
-  /* Terminals list */
   .terminals-container {
     display: flex;
     flex-direction: column;
@@ -420,7 +384,6 @@
     animation: fadeIn 0.2s ease;
   }
 
-  /* Terminal card */
   .terminal-card {
     background: var(--component-bg);
     border: 1px solid var(--border);
@@ -452,7 +415,6 @@
     opacity: 0.75;
   }
 
-  /* Card header row */
   .terminal-card-header {
     display: flex;
     justify-content: space-between;
@@ -469,7 +431,6 @@
     flex-wrap: wrap;
   }
 
-  /* Status indicators */
   .status-indicator {
     display: inline-flex;
     align-items: center;
@@ -479,41 +440,6 @@
     flex-shrink: 0;
   }
 
-  .status-dot-active {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #4ade80;
-    animation: activity-pulse 600ms ease-in-out infinite;
-  }
-
-  .status-dot-idle {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--ds-gray-600);
-  }
-
-  .status-dot-static {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--ds-gray-600);
-  }
-
-  @keyframes activity-pulse {
-    0%,
-    100% {
-      transform: scale(1);
-      opacity: 1;
-    }
-    50% {
-      transform: scale(1.5);
-      opacity: 0.7;
-    }
-  }
-
-  /* Command name */
   .terminal-command {
     font-family: var(--font-mono);
     font-size: var(--text-base);
@@ -525,15 +451,6 @@
     max-width: 200px;
   }
 
-  /* Time */
-  .terminal-time {
-    font-size: var(--text-xs);
-    color: var(--text-tertiary);
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  /* Right side of exited card header */
   .terminal-card-right {
     display: flex;
     align-items: center;
@@ -541,7 +458,6 @@
     flex-shrink: 0;
   }
 
-  /* Meta row: cwd + pid */
   .terminal-card-meta {
     display: flex;
     align-items: center;
@@ -567,7 +483,6 @@
     flex-shrink: 0;
   }
 
-  /* Output preview strip */
   .terminal-preview {
     background: var(--ds-background-200);
     border: 1px solid var(--ds-gray-alpha-200);
@@ -587,13 +502,7 @@
     line-height: var(--leading-normal);
   }
 
-  /* Responsive */
   @media (max-width: 768px) {
-    .page-header-content {
-      flex-direction: column;
-      gap: var(--space-4);
-    }
-
     .terminal-card {
       padding: var(--space-3);
     }
@@ -604,26 +513,12 @@
       gap: var(--space-2);
     }
 
-    .terminal-time {
-      align-self: flex-start;
-    }
-
     .terminal-command {
       max-width: 160px;
     }
   }
 
   @media (max-width: 480px) {
-    .page-actions {
-      flex-direction: column;
-      width: 100%;
-    }
-
-    .page-actions :global(button) {
-      width: 100%;
-      flex: 1;
-    }
-
     .terminal-command {
       max-width: 120px;
     }

@@ -208,57 +208,10 @@
 </main>
 
 <style>
-  .page-header {
-    margin-bottom: var(--space-6);
-  }
-
-  .page-header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: var(--space-4);
-  }
-
-  .page-title {
-    font-size: var(--text-2xl);
-    font-weight: 600;
-    letter-spacing: -0.03em;
-    color: var(--text-primary);
-    margin-bottom: var(--space-1);
-  }
-
-  .page-description {
-    font-size: var(--text-sm);
-    color: var(--text-secondary);
-  }
-
-  .page-actions {
-    display: flex;
-    gap: var(--space-2);
-    flex-shrink: 0;
-  }
-
   .projects-container {
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
     animation: fadeIn 0.2s ease;
-  }
-
-  @media (max-width: 768px) {
-    .page-header-content {
-      flex-direction: column;
-      gap: var(--space-4);
-    }
-  }
-
-  @media (max-width: 480px) {
-    .page-actions {
-      width: 100%;
-    }
-
-    .page-actions :global(button) {
-      flex: 1;
-    }
   }
 </style>

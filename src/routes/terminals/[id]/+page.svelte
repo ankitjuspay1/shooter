@@ -700,15 +700,14 @@
           />
         {/if}
 
-        <button
-          class="term-shortcuts-btn"
+        <Button
+          classes="term-shortcuts-btn"
           onclick={() => {
             showShortcutsHelp = !showShortcutsHelp;
           }}
-          type="button"
-          title="{modLabel}+/ for shortcuts"
-          aria-label="Keyboard shortcuts">?</button
-        >
+          text="?"
+          ariaLabel="Keyboard shortcuts"
+        />
 
         {#if isRunning}
           <Button
@@ -896,25 +895,19 @@
   }
 
   /* Shortcuts button */
-  .term-shortcuts-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--text-tertiary);
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
+  :global(.term-shortcuts-btn) {
+    --button-height: 28px;
+    --button-width: 28px;
+    --button-padding: 0;
+    --button-border-radius: var(--radius-sm);
+    --button-border: 1px solid var(--border);
+    --button-color: transparent;
+    --button-text-color: var(--text-tertiary);
+    --button-font-size: 14px;
+    --button-font-weight: 600;
+    --button-hover-color: var(--component-bg-hover);
+    --button-hover-text-color: var(--text-primary);
     flex-shrink: 0;
-  }
-
-  .term-shortcuts-btn:hover {
-    background: var(--component-bg-hover);
-    color: var(--text-primary);
   }
 
   /* CWD display */
@@ -957,24 +950,12 @@
   }
 
   .activity-active {
-    background: #4ade80;
+    background: var(--ds-green-500);
     animation: activity-pulse 600ms ease-in-out infinite;
   }
 
   .activity-idle {
     background: var(--ds-gray-600);
-  }
-
-  @keyframes activity-pulse {
-    0%,
-    100% {
-      transform: scale(1);
-      opacity: 1;
-    }
-    50% {
-      transform: scale(1.5);
-      opacity: 0.7;
-    }
   }
 
   /* ============================================
@@ -987,7 +968,7 @@
     min-height: 0;
     overflow: hidden;
     padding: var(--space-1);
-    background: #0a0a0f;
+    background: var(--ds-background-200, #0a0a0f);
   }
 
   .term-body :global(.xterm) {
